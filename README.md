@@ -55,8 +55,9 @@ POSTGRES_DBNAME=<YOUR_POSTGRES_DB_NAME>
 #### b) lancer l'application via cette commande:
 D'abord, Arrêter les services qui tournent actuellement [Optionnel]
 ```
-docker-compose down
+docker-compose --env-file .env down -v
 ```
+
 Lancer le build
 ```
 docker-compose --env-file .env up --build -d
@@ -80,18 +81,23 @@ Le projet utilise Docker Compose avec trois services principaux :
 docker-compose --env-file .env up --build -d
 ```
 
-#### 5.2.2 - Lancer le serveur API manuellement
+#### 5.2.2 - Launch unit test
+```
+docker-compose --env-file .env run --rm api_app python manage.py test api_app
+```
+
+#### 5.2.3 - Lancer le serveur API manuellement
 ```
 docker-compose --env-file .env run api_app
 ```
 
-#### 5.2.3 - Exécuter les tests automatisés
+#### 5.2.4 - Exécuter les tests automatisés
 ##### a) via le script
 ```
 docker-compose --env-file .env run --rm run_test1
 ```
 
-##### v) via API REST
+##### b) via API REST
 Créer un compte super utilisateur Django:
 ```
 docker-compose --env-file .env run --rm api_app python manage.py createsuperuser
