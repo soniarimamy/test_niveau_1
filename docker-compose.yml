@@ -1,0 +1,53 @@
+version: "3.9"
+
+services:
+  postgresql_db:
+    image: postgres:16
+    container_name: postgres_test1
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PWD}
+      POSTGRES_DB: ${POSTGRES_DBNAME}
+    ports:
+      - "${POSTGRES_EXTERNAL_PORT}:${POSTGRES_INTERNAL_PORT}"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - test_network
+
+  api_app:
+    build: .
+    container_name: api_test1
+    image: rochel05/api_test1
+    env_file:
+      - .env
+    depends_on:
+      - postgresql_db
+    ports:
+      - "8000:8000"
+    networks:
+      - test_network
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+
+  run_test1:
+    build: .
+    container_name: run_test1
+    image: rochel05/run_test1
+    env_file:
+      - .env
+    depends_on:
+      - postgresql_db
+      - api_app
+    networks:
+      - test_network
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py run_test1"
+
+volumes:
+  pgdata:
+
+networks:
+  test_network:
