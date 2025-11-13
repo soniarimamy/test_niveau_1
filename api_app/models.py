@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Test1Result(models.Model):
     email = models.EmailField()
     status = models.CharField(max_length=50)
