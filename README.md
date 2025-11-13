@@ -40,6 +40,24 @@ cd test_niveau_1
 ```
 
 ### 4.3 - Lancer l’application avec Docker
+#### a) créer un fichier .env à la racine du projet et specifier la valeur des variables suivantes:
+```
+DEBUG=True or False
+SECRET_KEY=<YOUR_DJANGO_SECRET_KEY>
+POSTGRES_USER=<YOUR_POSTGRES_DB_USER>
+POSTGRES_PWD=<YOUR_POSTGRES_DB_PASSWORD>
+POSTGRES_HOST=postgresql_db
+POSTGRES_INTERNAL_PORT=<YOUR_POSTGRES_DB_INTERNAL_PORT>
+POSTGRES_EXTERNAL_PORT=<YOUR_POSTGRES_DB_EXTERNAL_PORT>
+POSTGRES_DBNAME=<YOUR_POSTGRES_DB_NAME>
+```
+
+#### b) lancer l'application via cette commande:
+D'abord, Arrêter les services qui tournent actuellement [Optionnel]
+```
+docker-compose down
+```
+Lancer le build
 ```
 docker-compose --env-file .env up --build -d
 ```
