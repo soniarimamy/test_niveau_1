@@ -1,0 +1,6 @@
+django
+requests
+python-dotenv
+psycopg2-binary
+djangorestframework
+djangorestframework_simplejwt
